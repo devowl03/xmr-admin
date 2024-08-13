@@ -15,9 +15,7 @@ const RevenueGraph: React.FC = () => {
     const [data, setData] = useState<RevenueData[]>([]);
 
     useEffect(() => {
-        // Simulate fetching data
         const fetchData = async () => {
-            // Uncomment and use real API when ready
             // const response = await revenueInfo("monthly");
             // setData(response.data);
 
@@ -35,25 +33,61 @@ const RevenueGraph: React.FC = () => {
     }, []);
 
     return (
-        <Box>
+        <div
+            style={{
+                backgroundColor: "#1a1a1a",
+                padding: "20px",
+                borderRadius: "12px",
+                boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.5)",
+            }}
+        >
             <ResponsiveContainer width="100%" height={300}>
                 <LineChart
                     data={data}
                     margin={{
-                        top: 5, right: 30, left: 20, bottom: 5,
+                        top: 10, right: 30, left: 20, bottom: 10,
                     }}
                 >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="revenue" stroke="#8884d8" />
-                    <Line type="monotone" dataKey="userLosses" stroke="#82ca9d" />
-                    <Line type="monotone" dataKey="platformHandouts" stroke="#ffc658" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                    <XAxis dataKey="name" stroke="#bbb" />
+                    <YAxis stroke="#bbb" />
+                    <Tooltip
+                        contentStyle={{
+                            backgroundColor: "#333",
+                            borderRadius: "8px",
+                            border: "none",
+                            color: "#fff",
+                        }}
+                        cursor={{ stroke: "rgba(255, 255, 255, 0.1)", strokeWidth: 2 }}
+                    />
+                    <Legend wrapperStyle={{ color: "#fff" }} />
+                    <Line
+                        type="monotone"
+                        dataKey="revenue"
+                        stroke="#ffcccb"
+                        strokeWidth={3}
+                        dot={{ r: 6 }}
+                        activeDot={{ r: 8 }}
+                    />
+                    <Line
+                        type="monotone"
+                        dataKey="userLosses"
+                        stroke="#add8e6"
+                        strokeWidth={3}
+                        dot={{ r: 6 }}
+                        activeDot={{ r: 8 }}
+                    />
+                    <Line
+                        type="monotone"
+                        dataKey="platformHandouts"
+                        stroke="#ffdab9"
+                        strokeWidth={3}
+                        dot={{ r: 6 }}
+                        activeDot={{ r: 8 }}
+                    />
                 </LineChart>
             </ResponsiveContainer>
-        </Box>
+        </div>
     );
 };
 

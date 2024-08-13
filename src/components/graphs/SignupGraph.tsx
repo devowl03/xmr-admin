@@ -17,24 +17,42 @@ const SignupGraph: React.FC = () => {
   ];
 
   return (
-    <Box>
+    <div
+      style={{
+        backgroundColor: "#1a1a1a",
+        padding: "20px",
+        borderRadius: "12px",
+        boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.5)",
+      }}
+    >
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={dummyData}
           margin={{
-            top: 5, right: 30, left: 20, bottom: 5,
+            top: 10,
+            right: 30,
+            left: 20,
+            bottom: 10,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="signups" fill="#8884d8" />
-          <Bar dataKey="visits" fill="#82ca9d" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+          <XAxis dataKey="name" stroke="#bbb" />
+          <YAxis stroke="#bbb" />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "#333",
+              borderRadius: "8px",
+              border: "none",
+              color: "#fff",
+            }}
+            cursor={{ fill: "rgba(255, 255, 255, 0.1)" }}
+          />
+          <Legend wrapperStyle={{ color: "#fff" }} />
+          <Bar dataKey="signups" fill="#ffcccb" radius={[10, 10, 0, 0]} />
+          <Bar dataKey="visits" fill="#add8e6" radius={[10, 10, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
-    </Box>
+    </div>
   );
 };
 

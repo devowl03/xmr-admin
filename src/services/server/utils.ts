@@ -65,3 +65,11 @@ export const editUser = async (
     },
   });
 };
+
+export const getTransactionGraph = async (interval: string, type: string) => {
+  const response = await fetch(
+    `https://a.theaibunny.com/api/admin/getTransactionGraph?interval=${interval}&type=${type}`
+  );
+  const data = await response.json();
+  return data;
+};
