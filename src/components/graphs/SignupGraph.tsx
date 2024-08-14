@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { Box } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { getUsersCount } from "@/services/server/utils";
 
 interface SignupData {
   name: string;
@@ -11,10 +12,27 @@ interface SignupData {
 }
 
 const SignupGraph: React.FC = () => {
-  const dummyData: SignupData[] = [
-    { name: "Week 1", signups: 4000, visits: 2400 },
-    { name: "Week 2", signups: 3000, visits: 1398 },
-  ];
+  const [data, setData] = useState<SignupData[]>([]);
+  const [interval, setInterval] = useState("daily");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getUsersCount(interval, false);
+
+        const transformedData: SignupData[] = result.map((item: any) => ({
+          name: item.period,
+          invites: item.count,
+        }));
+
+        setData(transformedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [interval]);
 
   return (
     <div
@@ -27,7 +45,7 @@ const SignupGraph: React.FC = () => {
     >
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
-          data={dummyData}
+          data={data}
           margin={{
             top: 10,
             right: 30,
@@ -52,6 +70,34 @@ const SignupGraph: React.FC = () => {
           <Bar dataKey="visits" fill="#add8e6" radius={[10, 10, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
+      <FormControl sx={{ marginTop: "1.5rem" }} variant="outlined" margin="normal" fullWidth>
+        <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>Interval</InputLabel>
+        <Select
+          value={interval}
+          onChange={(e) => setInterval(e.target.value)}
+          label="Interval"
+          sx={{
+            backgroundColor: "#1f1f1f",
+            color: "#fff",
+            fontSize: "0.85rem",
+            borderRadius: "10px",
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#555",
+            },
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#888",
+            },
+            "& .MuiSvgIcon-root": {
+              color: "#fff",
+            },
+          }}
+        >
+          <MenuItem value="daily" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Daily</MenuItem>
+          <MenuItem value="weekly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Weekly</MenuItem>
+          <MenuItem value="monthly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Monthly</MenuItem>
+          <MenuItem value="yearly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Yearly</MenuItem>
+        </Select>
+      </FormControl>
     </div>
   );
 };

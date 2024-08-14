@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { Box } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { getRevenueInfo } from "@/services/server/utils";
 
 interface RevenueData {
     name: string;
@@ -13,24 +14,28 @@ interface RevenueData {
 
 const RevenueGraph: React.FC = () => {
     const [data, setData] = useState<RevenueData[]>([]);
+    const [interval, setInterval] = useState("daily");
 
     useEffect(() => {
         const fetchData = async () => {
-            // const response = await revenueInfo("monthly");
-            // setData(response.data);
+            try {
+                const result = await getRevenueInfo(interval);
 
-            // Using dummy data for now
-            const dummyData: RevenueData[] = [
-                { name: "Jan", revenue: 4000, userLosses: 2400, platformHandouts: 2400 },
-                { name: "Feb", revenue: 3000, userLosses: 1398, platformHandouts: 2210 },
-                { name: "Mar", revenue: 2000, userLosses: 9800, platformHandouts: 2290 },
-                { name: "Apr", revenue: 2780, userLosses: 3908, platformHandouts: 2000 },
-            ];
-            setData(dummyData);
+                const transformedData = Object.keys(result.data).map((key) => ({
+                    name: key,
+                    revenue: result.data[key].revenue,
+                    userLosses: result.data[key].userLosses,
+                    platformHandouts: result.data[key].platformHandouts,
+                }));
+
+                setData(transformedData);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         };
 
         fetchData();
-    }, []);
+    }, [interval]);
 
     return (
         <div
@@ -87,6 +92,34 @@ const RevenueGraph: React.FC = () => {
                     />
                 </LineChart>
             </ResponsiveContainer>
+            <FormControl sx={{ marginTop: "1.5rem" }} variant="outlined" margin="normal" fullWidth>
+                <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>Interval</InputLabel>
+                <Select
+                    value={interval}
+                    onChange={(e) => setInterval(e.target.value)}
+                    label="Interval"
+                    sx={{
+                        backgroundColor: "#1f1f1f",
+                        color: "#fff",
+                        fontSize: "0.85rem",
+                        borderRadius: "10px",
+                        "& .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "#555",
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                            borderColor: "#888",
+                        },
+                        "& .MuiSvgIcon-root": {
+                            color: "#fff",
+                        },
+                    }}
+                >
+                    <MenuItem value="daily" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Daily</MenuItem>
+                    <MenuItem value="weekly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Weekly</MenuItem>
+                    <MenuItem value="monthly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Monthly</MenuItem>
+                    <MenuItem value="yearly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Yearly</MenuItem>
+                </Select>
+            </FormControl>
         </div>
     );
 };

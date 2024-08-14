@@ -73,3 +73,37 @@ export const getTransactionGraph = async (interval: string, type: string) => {
   const data = await response.json();
   return data;
 };
+
+export const getRevenueInfo = async (interval: string) => {
+  const response = await fetch(
+    `https://a.theaibunny.com/api/admin/revenueInfo?period=${interval}`
+  );
+  const data = await response.json();
+  return data;
+};
+
+export const getUsersCount = async (interval: string, invite?: boolean) => {
+  const response = await fetch(
+    `https://a.theaibunny.com/api/admin/getUsersCountByPeriod?period=${interval}&has_invite=${invite}`
+  );
+  const data = await response.json();
+  return data;
+};
+
+export const getBetsGraph = async (
+  period: string,
+  game: string,
+  start?: string,
+  end?: string
+) => {
+  let queryString = `https://a.theaibunny.com/api/admin/getBetsTotalsByPeriod?period=${period}&game=${game}`;
+  if (start) {
+    queryString += `&start=${start}`;
+  }
+  if (end) {
+    queryString += `&end=${end}`;
+  }
+  const response = await fetch(queryString);
+  const data = await response.json();
+  return data;
+};
