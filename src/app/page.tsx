@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       const response = await getTransactionGraph();
-      console.log('kokkoko',response);
+      console.log(response);
     })();
   }, []);
 
