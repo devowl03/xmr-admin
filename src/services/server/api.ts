@@ -1,11 +1,11 @@
 import axios, { InternalAxiosRequestConfig, AxiosHeaders } from "axios";
 import { generateHmacSignature } from "./hmac";
 
-const API_PUBLIC_KEY = process.env.API_PUBLIC_KEY!;
-const API_SECRET_KEY = process.env.API_SECRET_KEY!;
+const API_PUBLIC_KEY = process.env.NEXT_PUBLIC_API_PUBLIC_KEY!;
+const API_SECRET_KEY = process.env.NEXT_PUBLIC_API_SECRET_KEY!;
 
 const api = axios.create({
-  baseURL: process.env.API_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
 });
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
