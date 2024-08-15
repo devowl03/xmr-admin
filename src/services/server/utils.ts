@@ -1,7 +1,4 @@
-import xior from "xior";
-import { z } from "zod";
-import { apiRequest, User } from "../types";
-import axios from "axios";
+import { ClientApiRequest as apiRequest, User } from "../types";
 
 export type SortBy = "createdAt" | "totalBet" | "totalWon" | "gamePlayed";
 export const userList = async (props: {
@@ -66,12 +63,13 @@ export const editUser = async (
   });
 };
 
-export const getTransactionGraph = async (interval: string, type: string) => {
-  const response = await fetch(
-    `https://a.theaibunny.com/api/admin/getTransactionGraph?interval=${interval}&type=${type}`
-  );
-  const data = await response.json();
-  return data;
+export const getTransactionGraph = async (interval?: string, type?: string) => {
+  return await apiRequest<any>("GET", "/api/admin/getTransactionGraph", {
+    params: {
+      interval,
+      type,
+    },
+  });
 };
 
 export const getRevenueInfo = async (interval: string) => {

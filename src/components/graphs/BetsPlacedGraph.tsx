@@ -1,8 +1,25 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { Box, TextField, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  Box,
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import { getBetsGraph } from "@/services/server/utils";
 
 interface BetsPlacedData {
@@ -17,14 +34,16 @@ const BetsPlacedGraph: React.FC = () => {
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
 
-
   const fetchData = async () => {
     try {
       const response = await getBetsGraph(period, game, start, end);
       const result = await response.json();
 
       const mappedData = result.data.map((item: any) => ({
-        name: new Date(item._id).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+        name: new Date(item._id).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+        }),
         bets: item.totalBetAmount,
       }));
 
@@ -49,13 +68,22 @@ const BetsPlacedGraph: React.FC = () => {
         boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.5)",
       }}
     >
-
-      <Box sx={{ backgroundColor: "#1a1a1a", borderRadius: "16px", padding: "1.5rem", boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.5)" }}>
+      <Box
+        sx={{
+          backgroundColor: "#1a1a1a",
+          borderRadius: "16px",
+          padding: "1.5rem",
+          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.5)",
+        }}
+      >
         <ResponsiveContainer width="100%" height={300}>
           <LineChart
             data={data}
             margin={{
-              top: 10, right: 30, left: 20, bottom: 10,
+              top: 10,
+              right: 30,
+              left: 20,
+              bottom: 10,
             }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#444" />
@@ -82,9 +110,19 @@ const BetsPlacedGraph: React.FC = () => {
           </LineChart>
         </ResponsiveContainer>
       </Box>
-      <form style={{ marginBottom: "20px", display: "flex" }} className="flex flex-col mt-5">
-        <FormControl sx={{ marginTop: "1.5rem" }} variant="outlined" margin="normal" fullWidth>
-          <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>Interval</InputLabel>
+      <form
+        style={{ marginBottom: "20px", display: "flex" }}
+        className="flex flex-col mt-5"
+      >
+        <FormControl
+          sx={{ marginTop: "1.5rem" }}
+          variant="outlined"
+          margin="normal"
+          fullWidth
+        >
+          <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>
+            Interval
+          </InputLabel>
           <Select
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
@@ -105,14 +143,36 @@ const BetsPlacedGraph: React.FC = () => {
               },
             }}
           >
-            <MenuItem value="daily" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Daily</MenuItem>
-            <MenuItem value="weekly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Weekly</MenuItem>
-            <MenuItem value="monthly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Monthly</MenuItem>
-            <MenuItem value="yearly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Yearly</MenuItem>
+            <MenuItem
+              value="daily"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Daily
+            </MenuItem>
+            <MenuItem
+              value="weekly"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Weekly
+            </MenuItem>
+            <MenuItem
+              value="monthly"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Monthly
+            </MenuItem>
+            <MenuItem
+              value="yearly"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Yearly
+            </MenuItem>
           </Select>
         </FormControl>
         <FormControl variant="outlined" margin="normal" fullWidth>
-          <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>Game</InputLabel>
+          <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>
+            Game
+          </InputLabel>
           <Select
             value={game}
             onChange={(e) => setGame(e.target.value)}
@@ -133,10 +193,30 @@ const BetsPlacedGraph: React.FC = () => {
               },
             }}
           >
-            <MenuItem value="Crash" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Crash</MenuItem>
-            <MenuItem value="Coinflip" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Coinflip</MenuItem>
-            <MenuItem value="Mines" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Mines</MenuItem>
-            <MenuItem value="Plinko" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Plinko</MenuItem>
+            <MenuItem
+              value="Crash"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Crash
+            </MenuItem>
+            <MenuItem
+              value="Coinflip"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Coinflip
+            </MenuItem>
+            <MenuItem
+              value="Mines"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Mines
+            </MenuItem>
+            <MenuItem
+              value="Plinko"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Plinko
+            </MenuItem>
           </Select>
         </FormControl>
         <TextField

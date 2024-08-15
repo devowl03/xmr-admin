@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { getUsersCount } from "@/services/server/utils";
 
@@ -19,10 +28,12 @@ const AffiliateInviteGraph: React.FC = () => {
       try {
         const result = await getUsersCount(interval, true);
 
-        const transformedData: AffiliateInviteData[] = result.map((item: any) => ({
-          name: item.period,
-          invites: item.count,
-        }));
+        const transformedData: AffiliateInviteData[] = result.map(
+          (item: any) => ({
+            name: item.period,
+            invites: item.count,
+          })
+        );
 
         setData(transformedData);
       } catch (error) {
@@ -46,7 +57,10 @@ const AffiliateInviteGraph: React.FC = () => {
         <LineChart
           data={data}
           margin={{
-            top: 10, right: 30, left: 20, bottom: 10,
+            top: 10,
+            right: 30,
+            left: 20,
+            bottom: 10,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#444" />
@@ -72,8 +86,15 @@ const AffiliateInviteGraph: React.FC = () => {
           />
         </LineChart>
       </ResponsiveContainer>
-      <FormControl sx={{ marginTop: "1.5rem" }} variant="outlined" margin="normal" fullWidth>
-        <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>Interval</InputLabel>
+      <FormControl
+        sx={{ marginTop: "1.5rem" }}
+        variant="outlined"
+        margin="normal"
+        fullWidth
+      >
+        <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>
+          Interval
+        </InputLabel>
         <Select
           value={interval}
           onChange={(e) => setInterval(e.target.value)}
@@ -94,10 +115,30 @@ const AffiliateInviteGraph: React.FC = () => {
             },
           }}
         >
-          <MenuItem value="daily" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Daily</MenuItem>
-          <MenuItem value="weekly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Weekly</MenuItem>
-          <MenuItem value="monthly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Monthly</MenuItem>
-          <MenuItem value="yearly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Yearly</MenuItem>
+          <MenuItem
+            value="daily"
+            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+          >
+            Daily
+          </MenuItem>
+          <MenuItem
+            value="weekly"
+            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+          >
+            Weekly
+          </MenuItem>
+          <MenuItem
+            value="monthly"
+            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+          >
+            Monthly
+          </MenuItem>
+          <MenuItem
+            value="yearly"
+            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+          >
+            Yearly
+          </MenuItem>
         </Select>
       </FormControl>
     </div>

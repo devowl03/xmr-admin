@@ -1,20 +1,6 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  async rewrites() {
-    return {
-      fallback: [
-        {
-          source: "/dashboard",
-          destination: "/",
-        },
-        {
-          source: "/:path*",
-          destination: "https://a.theaibunny.com/:path*",
-        },
-      ],
-    };
-  },
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.mp3$/,

@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { getUsersCount } from "@/services/server/utils";
 
@@ -70,8 +79,15 @@ const SignupGraph: React.FC = () => {
           <Bar dataKey="visits" fill="#add8e6" radius={[10, 10, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
-      <FormControl sx={{ marginTop: "1.5rem" }} variant="outlined" margin="normal" fullWidth>
-        <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>Interval</InputLabel>
+      <FormControl
+        sx={{ marginTop: "1.5rem" }}
+        variant="outlined"
+        margin="normal"
+        fullWidth
+      >
+        <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>
+          Interval
+        </InputLabel>
         <Select
           value={interval}
           onChange={(e) => setInterval(e.target.value)}
@@ -92,10 +108,30 @@ const SignupGraph: React.FC = () => {
             },
           }}
         >
-          <MenuItem value="daily" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Daily</MenuItem>
-          <MenuItem value="weekly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Weekly</MenuItem>
-          <MenuItem value="monthly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Monthly</MenuItem>
-          <MenuItem value="yearly" sx={{ fontSize: "0.85rem", padding: "6px 12px" }}>Yearly</MenuItem>
+          <MenuItem
+            value="daily"
+            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+          >
+            Daily
+          </MenuItem>
+          <MenuItem
+            value="weekly"
+            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+          >
+            Weekly
+          </MenuItem>
+          <MenuItem
+            value="monthly"
+            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+          >
+            Monthly
+          </MenuItem>
+          <MenuItem
+            value="yearly"
+            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+          >
+            Yearly
+          </MenuItem>
         </Select>
       </FormControl>
     </div>
