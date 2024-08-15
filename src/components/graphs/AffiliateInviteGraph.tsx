@@ -28,7 +28,7 @@ const AffiliateInviteGraph: React.FC = () => {
       try {
         const result = await getUsersCount(interval, true);
 
-        const transformedData: AffiliateInviteData[] = result.map(
+        const transformedData: AffiliateInviteData[] = result?.data?.map(
           (item: any) => ({
             name: item.period,
             invites: item.count,

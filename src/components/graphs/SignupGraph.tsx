@@ -29,7 +29,7 @@ const SignupGraph: React.FC = () => {
       try {
         const result = await getUsersCount(interval, false);
 
-        const transformedData: SignupData[] = result.map((item: any) => ({
+        const transformedData: SignupData[] = result?.data?.map((item: any) => ({
           name: item.period,
           invites: item.count,
         }));

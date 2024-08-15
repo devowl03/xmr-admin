@@ -28,7 +28,7 @@ const TransactionGraph: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await getTransactionGraph(interval, type);
-      setData(result.data);
+      setData(result?.data);
     };
     fetchData();
   }, [interval, type]);

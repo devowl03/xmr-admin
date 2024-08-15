@@ -30,7 +30,7 @@ const RevenueGraph: React.FC = () => {
       try {
         const result = await getRevenueInfo(interval);
 
-        const transformedData = Object.keys(result.data).map((key) => ({
+        const transformedData = Object.keys(result?.data)?.map((key) => ({
           name: key,
           revenue: result.data[key].revenue,
           userLosses: result.data[key].userLosses,

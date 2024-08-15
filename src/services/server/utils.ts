@@ -63,29 +63,30 @@ export const editUser = async (
   });
 };
 
-export const getTransactionGraph = async (interval?: string, type?: string) => {
+export const getTransactionGraph = async (period?: string, type?: string) => {
   return await apiRequest<any>("GET", "/api/admin/getTransactionGraph", {
     params: {
-      interval,
+      period,
       type,
     },
   });
 };
 
-export const getRevenueInfo = async (interval: string) => {
-  const response = await fetch(
-    `https://a.theaibunny.com/api/admin/revenueInfo?period=${interval}`
-  );
-  const data = await response.json();
-  return data;
+export const getRevenueInfo = async (period?: string) => {
+  return await apiRequest<any>("GET", "/api/admin/revenueInfo", {
+    params: {
+      period,
+    },
+  });
 };
 
-export const getUsersCount = async (interval: string, invite?: boolean) => {
-  const response = await fetch(
-    `https://a.theaibunny.com/api/admin/getUsersCountByPeriod?period=${interval}&has_invite=${invite}`
-  );
-  const data = await response.json();
-  return data;
+export const getUsersCount = async (period: string, has_invite?: boolean) => {
+  return await apiRequest<any>("GET", "/api/admin/getUsersCountByPeriod", {
+    params: {
+      period,
+      has_invite,
+    },
+  });
 };
 
 export const getBetsGraph = async (
@@ -94,14 +95,12 @@ export const getBetsGraph = async (
   start?: string,
   end?: string
 ) => {
-  let queryString = `https://a.theaibunny.com/api/admin/getBetsTotalsByPeriod?period=${period}&game=${game}`;
-  if (start) {
-    queryString += `&start=${start}`;
-  }
-  if (end) {
-    queryString += `&end=${end}`;
-  }
-  const response = await fetch(queryString);
-  const data = await response.json();
-  return data;
+  return await apiRequest<any>("GET", "/api/admin/getBetsTotalsByPeriod", {
+    params: {
+      period,
+      game,
+      start,
+      end,
+    },
+  });
 };
