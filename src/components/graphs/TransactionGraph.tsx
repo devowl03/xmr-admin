@@ -28,7 +28,9 @@ const TransactionGraph: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await getTransactionGraph(interval, type);
-      setData(result.data);
+      if (result.status === 200) {
+        setData(result?.data);
+      }
     };
     fetchData();
   }, [interval, type]);
@@ -87,99 +89,103 @@ const TransactionGraph: React.FC = () => {
           </LineChart>
         </ResponsiveContainer>
       </Box>
-
-      <FormControl
-        sx={{ marginTop: "1.5rem" }}
-        variant="outlined"
-        margin="normal"
-        fullWidth
+      <form
+        style={{ marginBottom: "20px", display: "flex" }}
+        className="flex flex-col mt-5"
       >
-        <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>
-          Interval
-        </InputLabel>
-        <Select
-          value={interval}
-          onChange={(e) => setInterval(e.target.value)}
-          label="Interval"
-          sx={{
-            backgroundColor: "#1f1f1f",
-            color: "#fff",
-            fontSize: "0.85rem",
-            borderRadius: "10px",
-            "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#555",
-            },
-            "&:hover .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#888",
-            },
-            "& .MuiSvgIcon-root": {
-              color: "#fff",
-            },
-          }}
+        <FormControl
+          sx={{ marginTop: "1.5rem" }}
+          variant="outlined"
+          margin="normal"
+          fullWidth
         >
-          <MenuItem
-            value="daily"
-            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+          <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>
+            Interval
+          </InputLabel>
+          <Select
+            value={interval}
+            onChange={(e) => setInterval(e.target.value)}
+            label="Interval"
+            sx={{
+              backgroundColor: "#1f1f1f",
+              color: "#fff",
+              fontSize: "0.85rem",
+              borderRadius: "10px",
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#555",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#888",
+              },
+              "& .MuiSvgIcon-root": {
+                color: "#fff",
+              },
+            }}
           >
-            Daily
-          </MenuItem>
-          <MenuItem
-            value="weekly"
-            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
-          >
-            Weekly
-          </MenuItem>
-          <MenuItem
-            value="monthly"
-            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
-          >
-            Monthly
-          </MenuItem>
-          <MenuItem
-            value="yearly"
-            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
-          >
-            Yearly
-          </MenuItem>
-        </Select>
-      </FormControl>
+            <MenuItem
+              value="daily"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Daily
+            </MenuItem>
+            <MenuItem
+              value="weekly"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Weekly
+            </MenuItem>
+            <MenuItem
+              value="monthly"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Monthly
+            </MenuItem>
+            <MenuItem
+              value="yearly"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Yearly
+            </MenuItem>
+          </Select>
+        </FormControl>
 
-      <FormControl variant="outlined" margin="normal" fullWidth>
-        <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>Type</InputLabel>
-        <Select
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          label="Type"
-          sx={{
-            backgroundColor: "#1f1f1f",
-            color: "#fff",
-            fontSize: "0.85rem",
-            borderRadius: "10px",
-            "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#555",
-            },
-            "&:hover .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#888",
-            },
-            "& .MuiSvgIcon-root": {
+        <FormControl variant="outlined" margin="normal" fullWidth>
+          <InputLabel sx={{ color: "#bbb", fontSize: "0.9rem" }}>Type</InputLabel>
+          <Select
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            label="Type"
+            sx={{
+              backgroundColor: "#1f1f1f",
               color: "#fff",
-            },
-          }}
-        >
-          <MenuItem
-            value="deposit"
-            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+              fontSize: "0.85rem",
+              borderRadius: "10px",
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#555",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#888",
+              },
+              "& .MuiSvgIcon-root": {
+                color: "#fff",
+              },
+            }}
           >
-            Deposit
-          </MenuItem>
-          <MenuItem
-            value="withdraw"
-            sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
-          >
-            Withdraw
-          </MenuItem>
-        </Select>
-      </FormControl>
+            <MenuItem
+              value="deposit"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Deposit
+            </MenuItem>
+            <MenuItem
+              value="withdraw"
+              sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
+            >
+              Withdraw
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </form>
     </div>
   );
 };

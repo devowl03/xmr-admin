@@ -29,20 +29,19 @@ const RevenueGraph: React.FC = () => {
     const fetchData = async () => {
       try {
         const result = await getRevenueInfo(interval);
-
-        const transformedData = Object.keys(result.data).map((key) => ({
-          name: key,
-          revenue: result.data[key].revenue,
-          userLosses: result.data[key].userLosses,
-          platformHandouts: result.data[key].platformHandouts,
-        }));
-
-        setData(transformedData);
+        if (result.status === 200) {
+          const transformedData = Object.keys(result.data).map((key) => ({
+            name: key,
+            revenue: result.data[key].revenue,
+            userLosses: result.data[key].userLosses,
+            platformHandouts: result.data[key].platformHandouts,
+          }));
+          setData(transformedData);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, [interval]);
 

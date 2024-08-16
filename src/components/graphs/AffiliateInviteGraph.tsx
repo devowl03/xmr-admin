@@ -27,20 +27,19 @@ const AffiliateInviteGraph: React.FC = () => {
     const fetchData = async () => {
       try {
         const result = await getUsersCount(interval, true);
-
-        const transformedData: AffiliateInviteData[] = result.map(
-          (item: any) => ({
-            name: item.period,
-            invites: item.count,
-          })
-        );
-
-        setData(transformedData);
+        if (result.status === 200) {
+          const transformedData: AffiliateInviteData[] = result.data.map(
+            (item: any) => ({
+              name: item.period,
+              invites: item.count,
+            })
+          );
+          setData(transformedData);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, [interval]);
 
