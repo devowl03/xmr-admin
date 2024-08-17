@@ -23,8 +23,10 @@ import {
 import { getBetsGraph } from "@/services/server/utils";
 
 interface BetsPlacedData {
-  name: string;
-  bets: number;
+  period: string
+  startDate: string
+  endDate: string
+  data: any[]
 }
 
 const BetsPlacedGraph: React.FC = () => {
@@ -33,44 +35,40 @@ const BetsPlacedGraph: React.FC = () => {
   const [game, setGame] = useState<string>("");
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const fetchData = async () => {
     try {
       const response = await getBetsGraph(period, game, start, end);
-      const result = await response.json();
-
-      const mappedData = result.data.map((item: any) => ({
-        name: new Date(item._id).toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-        }),
-        bets: item.totalBetAmount,
-      }));
-
-      setData(mappedData);
+      setData(response?.data?.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  useEffect(() => {
-    if (period && game) {
+
+  const handleSubmit = () => {
+    if (period && game && start && end) {
+      setError("");
       fetchData();
     }
-  }, [period, game, start, end]);
+    else {
+      setError("Select All Data");
+    }
+  }
 
   return (
     <div
       style={{
-        backgroundColor: "#1a1a1a",
         padding: "20px",
         borderRadius: "12px",
         boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.5)",
       }}
     >
       <Box
+      
+      className="bg-gray-800 "
         sx={{
-          backgroundColor: "#1a1a1a",
           borderRadius: "16px",
           padding: "1.5rem",
           boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.5)",
@@ -87,8 +85,8 @@ const BetsPlacedGraph: React.FC = () => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-            <XAxis dataKey="name" stroke="#bbb" />
-            <YAxis stroke="#bbb" />
+            <XAxis dataKey="name" stroke="#bbb" padding={{ left: 20, right: 20 }} />
+            <YAxis stroke="#bbb" padding={{ top: 20, bottom: 20 }} />
             <Tooltip
               contentStyle={{
                 backgroundColor: "#333",
@@ -112,7 +110,7 @@ const BetsPlacedGraph: React.FC = () => {
       </Box>
       <form
         style={{ marginBottom: "20px", display: "flex" }}
-        className="flex flex-col mt-5"
+        className="flex flex-col mt-5 w-[200px] md:w-[500px]"
       >
         <FormControl
           sx={{ marginTop: "1.5rem" }}
@@ -271,6 +269,28 @@ const BetsPlacedGraph: React.FC = () => {
             },
           }}
         />
+        <Button
+          variant="outlined"
+          className="mt-6 py-2"
+          sx={{
+            backgroundColor: "#1f1f1f",
+            color: "#fff",
+            fontSize: "0.85rem",
+            borderRadius: "5px",
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#555",
+            },
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#888",
+            },
+            "& .MuiSvgIcon-root": {
+              color: "#fff",
+            },
+          }}
+          onClick={handleSubmit}>
+          Submit
+        </Button>
+        <div className="text-red-600 mt-4">{error}</div>
       </form>
     </div>
   );

@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import Provider from "./Provider";
+import Sidebar from "@/components/Sidebar";
+
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
@@ -20,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen  bg-gradient-to-b from-black via-gray-900 to-black  font-sans antialiased",
           inter.variable
         )}
       >
@@ -30,7 +32,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Provider>{children} </Provider>
+          <Provider>
+            <div className="flex">
+              <Sidebar />
+              <main className="flex-1 p-8">{children}</main>
+            </div>
+          </Provider>
         </ThemeProvider>
       </body>
     </html>

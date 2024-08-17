@@ -79,7 +79,7 @@ export const getRevenueInfo = async (interval: string) => {
 };
 
 export const getUsersCount = async (interval: string, invite?: boolean) => {
-  return await apiRequest<any>("GET", "/api/admin/getUsersCountByPeriod", {
+  return await apiRequest<any>("GET", "/getUsersCountByPeriod", {
     params: {
       period: interval,
       invite,
@@ -93,7 +93,7 @@ export const getBetsGraph = async (
   start?: string,
   end?: string
 ) => {
-  return await apiRequest<any>("GET", "/api/admin/getBetsTotalsByPeriod", {
+  return await apiRequest<any>("GET", "/getBetsTotalsByPeriod", {
     params: {
       period,
       game,
