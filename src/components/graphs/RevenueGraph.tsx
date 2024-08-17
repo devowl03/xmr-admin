@@ -23,19 +23,20 @@ interface RevenueData {
 
 const RevenueGraph: React.FC = () => {
   const [data, setData] = useState<RevenueData[]>([]);
-  const [interval, setInterval] = useState("daily");
+  const [interval, setInterval] = useState("day");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getRevenueInfo(interval);
 
-        const transformedData = Object.keys(result?.data)?.map((key) => ({
+        const transformedData = Object.keys(result.data).map((key) => ({
           name: key,
           revenue: result.data[key].revenue,
           userLosses: result.data[key].userLosses,
           platformHandouts: result.data[key].platformHandouts,
         }));
+        console.log(result);
 
         setData(transformedData);
       } catch (error) {
@@ -134,25 +135,25 @@ const RevenueGraph: React.FC = () => {
           }}
         >
           <MenuItem
-            value="daily"
+            value="day"
             sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
           >
             Daily
           </MenuItem>
           <MenuItem
-            value="weekly"
+            value="week"
             sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
           >
             Weekly
           </MenuItem>
           <MenuItem
-            value="monthly"
+            value="month"
             sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
           >
             Monthly
           </MenuItem>
           <MenuItem
-            value="yearly"
+            value="year"
             sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
           >
             Yearly

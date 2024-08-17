@@ -21,14 +21,14 @@ interface AffiliateInviteData {
 
 const AffiliateInviteGraph: React.FC = () => {
   const [data, setData] = useState<AffiliateInviteData[]>([]);
-  const [interval, setInterval] = useState("daily");
+  const [interval, setInterval] = useState("day");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getUsersCount(interval, true);
 
-        const transformedData: AffiliateInviteData[] = result?.data?.map(
+        const transformedData: AffiliateInviteData[] = result.data.map(
           (item: any) => ({
             name: item.period,
             invites: item.count,
@@ -116,25 +116,25 @@ const AffiliateInviteGraph: React.FC = () => {
           }}
         >
           <MenuItem
-            value="daily"
+            value="day"
             sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
           >
             Daily
           </MenuItem>
           <MenuItem
-            value="weekly"
+            value="week"
             sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
           >
             Weekly
           </MenuItem>
           <MenuItem
-            value="monthly"
+            value="month"
             sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
           >
             Monthly
           </MenuItem>
           <MenuItem
-            value="yearly"
+            value="year"
             sx={{ fontSize: "0.85rem", padding: "6px 12px" }}
           >
             Yearly

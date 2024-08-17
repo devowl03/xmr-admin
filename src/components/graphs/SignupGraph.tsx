@@ -28,13 +28,7 @@ const SignupGraph: React.FC = () => {
     const fetchData = async () => {
       try {
         const result = await getUsersCount(interval, false);
-
-        const transformedData: SignupData[] = result?.data?.map((item: any) => ({
-          name: item.period,
-          invites: item.count,
-        }));
-
-        setData(transformedData);
+        console.log(result.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

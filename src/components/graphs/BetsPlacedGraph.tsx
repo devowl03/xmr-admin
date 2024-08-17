@@ -37,7 +37,9 @@ const BetsPlacedGraph: React.FC = () => {
   const fetchData = async () => {
     try {
       const response = await getBetsGraph(period, game, start, end);
-      const mappedData = response?.data?.map((item: any) => ({
+      const result = await response.json();
+
+      const mappedData = result.data.map((item: any) => ({
         name: new Date(item._id).toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",

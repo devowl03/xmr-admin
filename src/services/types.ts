@@ -54,22 +54,25 @@ export const apiRequest = async <ResponseType>(
   options?: AxiosRequestConfig
 ): Promise<UtilityResponse<ResponseType>> => {
   try {
-    const response = await api.request<ResponseType>({
+    const response = await api.request<UtilityResponse<ResponseType>>({
       method,
       url: endpoint,
       ...options,
     });
 
     // Check if response status is 200 and return the appropriate response type
-    if (response.status === 200 && response.data !== undefined) {
+    if (
+      (response.status === 200 || response.status == 304) &&
+      response.data.data !== undefined
+    ) {
       return {
-        status: 200,
-        data: response.data,
-      };
+        data: response.data.data,
+        status: response.status,
+      } as UtilityResponse<ResponseType>;
     } else {
       return {
+        message: response.data.message || "Unexpected error occurred",
         status: response.status,
-        message: "Unexpected error occurred",
       };
     }
   } catch (error) {

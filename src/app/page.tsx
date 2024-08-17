@@ -9,13 +9,13 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { DataTableDemo } from "./table";
 import GradientLineChart from "./chart";
 import { useEffect } from "react";
-import { ClientApiRequest } from "@/services/types";
-import { getTransactionGraph } from "@/services/server/utils";
+import { apiRequest, ClientApiRequest } from "@/services/types";
+import { getTransactionGraph, userList } from "@/services/server/utils";
 
 export default function Home() {
   useEffect(() => {
     (async () => {
-      const response = await getTransactionGraph();
+      const response = await userList({});
       console.log(response);
     })();
   }, []);

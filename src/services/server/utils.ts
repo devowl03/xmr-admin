@@ -1,4 +1,4 @@
-import { ClientApiRequest as apiRequest, User } from "../types";
+import { apiRequest, User } from "../types";
 
 export type SortBy = "createdAt" | "totalBet" | "totalWon" | "gamePlayed";
 export const userList = async (props: {
@@ -17,10 +17,8 @@ export const userList = async (props: {
     users: Array<User>;
   }>("GET", "/api/admin/userList", {
     params: {
-      name: props.username || "",
-      month: props.month || "",
       sortBy: props.sortBy || "createdAt",
-      order: props.order || "asc",
+      order: props.order || "desc",
       page: props.page ? props.page + 1 : 1,
       limit: props.limit || 10,
     },
@@ -63,28 +61,28 @@ export const editUser = async (
   });
 };
 
-export const getTransactionGraph = async (period?: string, type?: string) => {
-  return await apiRequest<any>("GET", "/api/admin/getTransactionGraph", {
+export const getTransactionGraph = async (interval?: string, type?: string) => {
+  return await apiRequest<any>("GET", "/getTransactionGraph", {
     params: {
-      period,
+      interval,
       type,
     },
   });
 };
 
-export const getRevenueInfo = async (period?: string) => {
-  return await apiRequest<any>("GET", "/api/admin/revenueInfo", {
+export const getRevenueInfo = async (interval: string) => {
+  return await apiRequest<any>("GET", "/revenueInfo", {
     params: {
-      period,
+      interval,
     },
   });
 };
 
-export const getUsersCount = async (period: string, has_invite?: boolean) => {
+export const getUsersCount = async (interval: string, invite?: boolean) => {
   return await apiRequest<any>("GET", "/api/admin/getUsersCountByPeriod", {
     params: {
-      period,
-      has_invite,
+      period: interval,
+      invite,
     },
   });
 };
